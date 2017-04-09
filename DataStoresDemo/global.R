@@ -23,9 +23,6 @@ if(!require(xml2)) {install.packages('xml2', dependencies = TRUE); require(xml2)
 
 Sys.setenv(SPARK_HOME='/usr/hdp/current/spark-client')
 Sys.setenv(SPARK_MASTER_IP = "data-lab.io")
-sc <- spark_connect(master = "yarn-client", config = spark_config())
-
-dbGetQuery(sc, "USE quakesdb")
-dbGetQuery(sc, "LOAD DATA INPATH '/user/nd186031/quakes.csv' INTO TABLE quakes_geo") #path: /user/nd186031/quakes.csv
-
-quakes_geo_sdf <- tbl(sc, "quakes_geo") %>% sdf_register()
+sc_flag <- 0
+sc <- NULL
+quakes_sdf <- NULL
