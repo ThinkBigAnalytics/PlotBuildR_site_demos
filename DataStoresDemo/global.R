@@ -23,5 +23,6 @@ if(!require(xml2)) {install.packages('xml2', dependencies = TRUE); require(xml2)
 
 Sys.setenv(SPARK_HOME='/usr/hdp/current/spark-client')
 Sys.setenv(SPARK_MASTER_IP = "data-lab.io")
-# sc <- spark_connect(master = "local")
-# spark_disconnect(sc)
+sc_flag <- 0
+sc <- NULL
+quakes_sdf <- NULL
