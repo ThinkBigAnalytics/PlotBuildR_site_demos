@@ -1,0 +1,6 @@
+# How to use PlotBuildR {#howto}
+
+This section contains the code snippets
+
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

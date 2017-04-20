@@ -1,0 +1,29 @@
+--- 
+title: "PlotBuildR User Guide"
+author: "Niket Doshi^1^, Eliano Marques^2^"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: thinkbig/PlotBuildR
+description: "A comprehensive user guide to plot interactive graphs dynamically using plotBuildR"
+---
+
+# Preface {-}
+
+## Structure of the guide {-}
+
+## Package Dependencies {-}
+
+## Acknowledgements {-}
+
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```
