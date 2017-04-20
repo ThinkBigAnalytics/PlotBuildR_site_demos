@@ -1,8 +1,7 @@
 .Rproj.user
 .Rhistory
 .RData
-.Ruserdata
-.DS_Store
+.Rprofile
 
 packrat/lib*/
 packrat/src/*
