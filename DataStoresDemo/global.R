@@ -15,7 +15,7 @@ if(!require(parcoords)) {devtools::install_github("timelyportfolio/parcoords");r
 if(!require(fasttime)) {install.packages("fasttime", dependencies = TRUE);require(fasttime)}
 if(!require(lubridate)) {install.packages("lubridate", dependencies = TRUE);require(lubridate)}
 options(lubridate.fasttime = TRUE)
-if(!require(PlotBuildR)){install_github('ThinkBigAnalytics/PlotBuildR'); require(PlotBuildR)}
+if(!require(PlotBuildR)){devtools::install_github('ThinkBigAnalytics/PlotBuildR'); require(PlotBuildR)}
 library(DBI)
 if(!require(RMySQL)) {install.packages('RMySQL', dependencies = TRUE); require(PlotBuildR)}
 if(!require(sparklyr)) {install.packages('sparklyr', dependencies = TRUE); require(sparklyr)}
