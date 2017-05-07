@@ -12,14 +12,16 @@ ui <- navbarPage(
       ),
       br(),
       fluidRow(
-        uiOutput("sql_tabset"),
-        tabsetPanel(
-          tabPanel("Summary",
-                   br()
-                   #dataTableOutput("tbl_sql")
-          ),
-          tabPanel("Plot",
-                   PlotBuildR::plotBuildROutput("plot_sql")
+        conditionalPanel(
+          condition = "input.sqlQueryButton%2 == 1",
+          tabsetPanel(
+            tabPanel("Summary",
+                     br(),
+                     dataTableOutput("tbl_sql")
+            ),
+            tabPanel("Plot",
+                     PlotBuildR::plotBuildROutput("plot_sql")
+            )
           )
         )
       )
@@ -39,11 +41,21 @@ ui <- navbarPage(
       ),
       br(),
       fluidRow(
-       # uiOutput("spark_tabset")
+        conditionalPanel(
+          condition = "input.sparkQueryButton%2 == 1",
+          tabsetPanel(
+            tabPanel("Summary",
+                     br(),
+                     dataTableOutput("tbl_spark")
+            ),
+            tabPanel("Plot",
+                     PlotBuildR::plotBuildROutput("plot_spark")
+            )
+          )
+        )
       )
     )
   )
-  
 )
 
 server <- function(input, output, session) {
@@ -69,16 +81,9 @@ server <- function(input, output, session) {
   reactive_list_mysql$df <- reactive({mysql_data()})
   
   output$tbl_sql <- renderDataTable({mysql_data()})
-  PlotBuildR::renderPlotBuildR("plot_sql", reactive_df = reactive_list_mysql, 
-                               df = "df", plot_type = "Bar Plot", title = "Demo SQL Plot")
   
-  output$sql_tabset <- renderUI({
-    tabsetPanel(
-      tabPanel("Summary",
-               dataTableOutput("tbl_sql")
-      )
-    )
-  })
+  PlotBuildR::renderPlotBuildR("plot_sql", reactive_df = reactive_list_mysql,
+                               df = "df", plot_type = "Bar Plot", title = "Demo SQL Plot")
   
   ## Spark ####
   
@@ -127,7 +132,6 @@ server <- function(input, output, session) {
       progress$inc(32, detail = "Fin")
     }
     
-    #dbGetQuery(sc, "USE quakesdb")
     spark_df <- switch(sparkChoiceSelected(),
                        "Hive" = {
                          dbGetQuery(sc, spark_query())
@@ -147,25 +151,12 @@ server <- function(input, output, session) {
     spark_data()
   })
   
-  # output$tbl_spark <- renderDataTable({
-  #   spark_data()
-  # })
-  # 
-  #PlotBuildR::renderPlotBuildR("plot_spark", reactive_df = reactive_list_spark, df = "df", plot_type = "Map", title = "Demo Spark Plot")
+  output$tbl_spark <- renderDataTable({
+    spark_data()
+  })
   
-  # output$spark_tabset <- renderUI({
-  #   "hello world"
-  #   # tabsetPanel(
-  #   #   tabPanel("Summary",
-  #   #            br(),
-  #   #            dataTableOutput("tbl_spark")
-  #   #   ),
-  #   #   tabPanel("Plot",
-  #   #            PlotBuildR::plotBuildROutput("plot_spark")
-  #   #   )
-  #   # )
-  # })
-  
+  PlotBuildR::renderPlotBuildR("plot_spark", reactive_df = reactive_list_spark, df = "df", 
+                               plot_type = "Map", title = "Demo Spark Plot")
 }
 
 shinyApp(ui, server)
