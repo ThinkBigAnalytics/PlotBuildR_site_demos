@@ -21,7 +21,7 @@ if(!require(RMySQL)) {install.packages('RMySQL', dependencies = TRUE); require(P
 if(!require(sparklyr)) {install.packages('sparklyr', dependencies = TRUE); require(sparklyr)}
 if(!require(xml2)) {install.packages('xml2', dependencies = TRUE); require(xml2)}
 
-Sys.setenv(SPARK_HOME='/usr/hdp/current/spark-client')
+Sys.setenv(SPARK_HOME='/usr/hdp/current/spark2-client')
 Sys.setenv(SPARK_MASTER_IP = "data-lab.io")
 sc_flag <- 0
 sc <- NULL

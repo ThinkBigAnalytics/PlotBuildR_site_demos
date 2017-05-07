@@ -12,13 +12,14 @@ ui <- navbarPage(
       ),
       br(),
       fluidRow(
+        uiOutput("sql_tabset"),
         tabsetPanel(
           tabPanel("Summary",
-                   br(),
-                   dataTableOutput("tbl")
+                   br()
+                   #dataTableOutput("tbl_sql")
           ),
           tabPanel("Plot",
-                   PlotBuildR::plotBuildROutput("plot1")
+                   PlotBuildR::plotBuildROutput("plot_sql")
           )
         )
       )
@@ -38,17 +39,7 @@ ui <- navbarPage(
       ),
       br(),
       fluidRow(
-        tabsetPanel(
-          tabPanel("Summary",
-                   br(),
-                   #verbatimTextOutput("print1")
-                   #dataTableOutput("test1")
-                   dataTableOutput("tbl_spark")
-          ),
-          tabPanel("Plot",
-                   PlotBuildR::plotBuildROutput("plot_spark")
-          )
-        )
+       # uiOutput("spark_tabset")
       )
     )
   )
@@ -77,10 +68,17 @@ server <- function(input, output, session) {
   reactive_list_mysql <- list()
   reactive_list_mysql$df <- reactive({mysql_data()})
   
-  output$tbl <- renderDataTable({mysql_data()})
-  PlotBuildR::renderPlotBuildR("plot1", reactive_df = reactive_list_mysql, 
+  output$tbl_sql <- renderDataTable({mysql_data()})
+  PlotBuildR::renderPlotBuildR("plot_sql", reactive_df = reactive_list_mysql, 
                                df = "df", plot_type = "Bar Plot", title = "Demo SQL Plot")
   
+  output$sql_tabset <- renderUI({
+    tabsetPanel(
+      tabPanel("Summary",
+               dataTableOutput("tbl_sql")
+      )
+    )
+  })
   
   ## Spark ####
   
@@ -149,11 +147,24 @@ server <- function(input, output, session) {
     spark_data()
   })
   
-  output$tbl_spark <- renderDataTable({
-    spark_data()
-  })
+  # output$tbl_spark <- renderDataTable({
+  #   spark_data()
+  # })
+  # 
+  #PlotBuildR::renderPlotBuildR("plot_spark", reactive_df = reactive_list_spark, df = "df", plot_type = "Map", title = "Demo Spark Plot")
   
-  PlotBuildR::renderPlotBuildR("plot_spark", reactive_df = reactive_list_spark, df = "df", plot_type = "Map", title = "Test Plot")
+  # output$spark_tabset <- renderUI({
+  #   "hello world"
+  #   # tabsetPanel(
+  #   #   tabPanel("Summary",
+  #   #            br(),
+  #   #            dataTableOutput("tbl_spark")
+  #   #   ),
+  #   #   tabPanel("Plot",
+  #   #            PlotBuildR::plotBuildROutput("plot_spark")
+  #   #   )
+  #   # )
+  # })
   
 }
 

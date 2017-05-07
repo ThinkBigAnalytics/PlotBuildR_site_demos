@@ -3,9 +3,9 @@ title: PlotBuildR
 account: nd186031
 server: data-lab.io
 appId: 19
-bundleId: 82
+bundleId: 92
 url: http://data-lab.io/content/19/
-when: 1491732508.88746
+when: 1493022658.64828
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: .Rprofile|data_raw/quakes.csv|data_raw/quakes.txt
