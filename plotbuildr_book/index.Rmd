@@ -1,16 +1,31 @@
 --- 
-title: "PlotBuildR User Guide"
+title: "plotbuildR: Dynamically Create Interactive Plots in Shiny"
 author: "Niket Doshi, Eliano Marques"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
-documentclass: book
+documentclass: krantz
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-github-repo: thinkbig/PlotBuildR
+colorlinks: yes
+fontsize: 12pt
+monofont: Source Code Pro
+url: https\://data-lab.io/Solutions/PlotBuildR/
+github-repo: thinkbiganalytics/PlotBuildR
 description: "A comprehensive user guide to plot interactive graphs dynamically using plotBuildR"
 ---
+
+```{r, echo=F}
+options(
+  htmltools.dir.version = FALSE, formatR.indent = 2,
+  width = 55, digits = 4, warnPartialMatchAttr = FALSE, warnPartialMatchDollar = FALSE
+)
+
+# lapply(c('DT', 'citr', 'formatR', 'svglite'), function(pkg) {
+#   if (system.file(package = pkg) == '') install.packages(pkg)
+# })
+```
 
 # Preface {-}
 
@@ -25,7 +40,9 @@ We hope this can offer an intuitive way into the world of graphics in **R** for 
 
 ## Structure of the guide {-}
 
+Chapters \@ref(intro) and \@ref(getting-started) introduces the *plotbuildR* package, the installation instructions and the basic usage and syntax, which should be sufficient to get most of the users started using *plotbuildR*. Chapter \@ref(how-to) tries to explain in detail for those who want to fine-tune the appearance of their plot, the kind of data required to make different kind of plots. We have also provided reproducible examples to generate all kind of plots. You do not need to read this chapter very carefully for the first time. You can learn what can be possibly changed, and come back later to know how. 
 
+To sum it up, this book is a comprehensive reference of the *plotbuildR* package. You can follow the 80/20 rule when reading it. Some sections are there for the sake of completeness, and not all sections are equally useful to the particular book(s) that you intend to write.
 
 ## Package Dependencies {-}
 

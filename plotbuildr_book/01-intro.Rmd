@@ -1,5 +1,9 @@
 # Introduction {#intro}
 
+This book is a guide to dynamically creating plots using *plotbuildR*. 
+
+It is not a comprehensive introduction to the htmlwidgets, such as plotly, leaflet, dygraph, and networkD3, on top of which plotbuildR was built. To learn more about these packages please refer to the links provided in the Chapter \@ref(references)  of this book. You do not have to be an expert of the R language (R Core Team 2017) or shiny (rstudio 2017) to read this book, but you are expected to have some basic knowledge about . For beginners, you may get started with the cheatsheets at https://www.rstudio.com/resources/cheatsheets. The appendix of this book contains brief introductions to these software packages.
+
 <!-- You can label chapter and section titles using `{#how-to}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods). -->
 
 <!-- Figures and tables with captions will be placed in `figure` and `table` environments, respectively. -->
@@ -28,15 +32,17 @@
 
 You can install the development release via the devtools package:
 
-```
+```{}
 if (!require("devtools")) install.packages("devtools")
-devtools::install_github('ThinkBigAnalytics/PlotBuildR', auth_token='2906e2eadca17b0d31e5217723d860a7974dc68b')
+devtools::install_github('ThinkBigAnalytics/PlotBuildR',
+                         auth_token='2906e2eadca17b0d31e5217723d860a7974dc68b')
 ```
 
 The version of the R package used to build this site is:
 
-```
+```{}
 packageVersion("plotbuildR")
 #> [1] '0.1.0'
 ```
 
+## Getting Started {-}

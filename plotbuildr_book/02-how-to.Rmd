@@ -1,4 +1,4 @@
-# How to use PlotBuildR {#howto}
+# How to use PlotBuildR {#how-to}
 
 This section contains the code snippets
 
