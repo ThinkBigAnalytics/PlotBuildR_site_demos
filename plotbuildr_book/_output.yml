@@ -6,7 +6,7 @@ bookdown::gitbook:
       before: |
         <li><a href="./">PlotBuildR Book</a></li>
       after: |
-        <li><a href="http://data-lab.io/PlotBuildR" target="blank">See the demo here</a></li>
+        <li><a href="http://data-lab.io/Solution/PlotBuildR/" target="blank">See the demo here</a></li>
     #edit: https://github.com/rstudio/bookdown-demo/edit/master/%s
     download: ["pdf", "epub"]
 bookdown::pdf_book:
