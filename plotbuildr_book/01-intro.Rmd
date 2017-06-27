@@ -2,7 +2,7 @@
 
 This book is a guide to dynamically creating plots using *plotbuildR*. 
 
-It is not a comprehensive introduction to the htmlwidgets, such as plotly, leaflet, dygraph, and networkD3, on top of which plotbuildR was built. To learn more about these packages please refer to the links provided in the Chapter \@ref(references)  of this book. You do not have to be an expert of the R language (R Core Team 2017) or shiny (rstudio 2017) to read this book, but you are expected to have some basic knowledge about . For beginners, you may get started with the cheatsheets at https://www.rstudio.com/resources/cheatsheets. The appendix of this book contains brief introductions to these software packages.
+It is not a comprehensive introduction to the htmlwidgets, such as plotly, leaflet, dygraph, and networkD3, on top of which plotbuildR was built. To learn more about these packages please refer to the links provided in the Chapter \@ref(references)  of this book. You do not have to be an expert of the R language (R Core Team 2017) or shiny (rstudio 2017) to read this book, but you are expected to have some basic knowledge about shiny. For beginners, you may get started with the cheatsheets at https://www.rstudio.com/resources/cheatsheets. The appendix of this book contains brief introductions to these software packages.
 
 <!-- You can label chapter and section titles using `{#how-to}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods). -->
 
@@ -34,8 +34,10 @@ You can install the development release via the devtools package:
 
 ```{}
 if (!require("devtools")) install.packages("devtools")
+
 devtools::install_github('ThinkBigAnalytics/PlotBuildR',
                          auth_token='2906e2eadca17b0d31e5217723d860a7974dc68b')
+
 ```
 
 The version of the R package used to build this site is:
@@ -46,3 +48,187 @@ packageVersion("plotbuildR")
 ```
 
 ## Getting Started {-}
+
+Copy and paste the code below in your R console to run your basic Shiny app with *plotbuildR*
+```{}
+library(shiny)
+library(plyr)
+library(dplyr)
+library(leaflet)
+library(plotly)
+library(networkD3)
+library(shinyBS)
+library(parcoords)
+library(PlotBuildR)
+
+df_list <- list()
+df_list <- "iris"
+
+## Ui Logic
+ui <- fluidPage(
+  fluidRow(
+    column(
+      width = 5,
+      PlotBuildR::plotBuildROutput("plot")
+    )
+  )
+)
+
+## Server Logic
+server <- function(input, output, session){
+  
+  renderPlotBuildR("plot", 
+                   df_list = df_list)
+}
+
+shinyApp(ui, server)
+```
+
+Running the above code will start a shiny app and will display a *plotbuildR* plot similar to the one displayed below
+
+```{r, echo=F}
+knitr::include_graphics("images/basic_plot.png")
+```
+
+> Note that the plot generated might be different from what you see in the above image, as the plotbuildR randomly selects the plot if you don't specify the plot type, refer section \@ref(plot-type) for more details
+
+As you can see in the image above, there are 3 main components of a plotbuildr
+
+   - The Plot (main body),
+   - The Plot Settings Button (on the top left), and
+   - The Layout Settings Button (on the top left)
+   
+We will understand each component in detail in the next section
+
+First, let's understand how the code works
+
+### Data Frame List {-}
+
+```{}
+df_list <- list()
+df_list <- "iris"
+```
+
+The *plotbuildr* accepts a `list` of data frame names loaded in your current `env` to be used to plot. This way you can play with different data sets and try different plots without the need to go back to your R console.
+
+The best way to go about to include all the data frames in your current environment would be to create a *global.R*, load all the data frames there and then source *global.R* in your app
+
+```{}
+## global.R
+
+iris_df <- iris
+
+mtcars_df <- mtcars
+
+df_list <- ls()
+```
+
+What about reactive objects? 
+
+Well, `reactive_df` argument takes a `list()` of reactive data frames to do that. So, you can `filter()` & `mutate()` all you want in a shiny app and plot your results.
+
+```{}
+## Server Logic
+
+server <- function(input, output, session){
+
+  rdf_list <- list()
+  
+  rdf_list$texas_housing_filtered <- reactive({
+    txhousing %>% 
+      filter(sales > 100)
+    })
+  
+  renderPlotBuildR("plot", 
+                   reactive_df = rdf_list)
+}
+
+```
+
+
+### plotbuildR Output {-}
+
+```{}
+PlotBuildR::plotBuildROutput("plot")
+```
+
+This is a standard shiny input binding, used to set the id, height and width of the plot.
+
+### Render plotbuildR {-}
+
+```{}
+PlotBuildR::renderPlotBuildR("plot", 
+                 df_list = df_list)
+```
+
+There are multiple arguments that can be passed in this function. Some arguments that are common to all the plots, however there are many arguments that are specific to certain kind of plots, see Chapter \@ref(arguments) for details. To make plotbuildR as flexible as possible, there are only two mandatory arguments `id & df_list | reactive_df` that one is expected to pass. All other arguments are optional.
+
+## plotbuildR Components {-}
+
+The *plotbuildR* is, basically, a `shinydashboard::box()` object, in which the plot is rendered in the content area of the box and the buttons are placed at the header of the box. If you use the *plotbuildR* in a Shiny Dashboard, you can also tweak the `status` and the `solidHeader` argument of the box. See the example below
+
+```{}
+## ui part
+library(shinydashboard)
+
+ui <- dashboardPage(
+  header = dashboardHeader(disable = T), 
+  sidebar = dashboardSidebar(disable = T),
+  body = dashboardBody(
+  fluidPage(
+    fluidRow(
+        PlotBuildR::plotBuildROutput("plot", col_width = 5, status = "danger", solidHeader = T)
+        )
+    )
+  )
+)
+```
+
+```{r, echo=F}
+knitr::include_graphics("images/basic_dashboard_plot.png")
+```
+
+Let's look at each component of the plotbuildR in detail
+
+### Plot {-}
+
+Currently the plotbuildR supports 17 interactive plots, which can be generated just by clicking a button. Below is the list of all the plots that can be generated. 
+
+```{r, echo =F}
+unlist(eval(as.list(args(PlotBuildR::plotChoices))$plotChoices_list), use.names = F)
+
+```
+
+You can pre-select any of these plots by passing the name of the plot in the plot_type argument in `renderPlotBuildR` function in the server side. See the example below,
+
+```{}
+# Server Side
+PlotBuildR::renderPlotBuildR("plot", 
+                 df_list = df_list, 
+                 plot_type = "Box Plot")
+```
+
+```{r, echo=F}
+knitr::include_graphics("images/basic_box_plot.png")
+```
+
+### Plot Settings {-}
+
+This is the core of the *plotbuildR*. When you click the plot settings button, a two-tab modal pops up giving you the possibility to choose one of the 17 plots and then toggle its settings. In the settings tab, you will find settings specific to the selected plot. We will go into more detail about this in Chapter \@ref(how-to)
+
+```{r, echo=F}
+knitr::include_graphics("images/basic_plot_settings.png")
+```
+
+As you can see the in image above, the selected plot is always highlighted. 
+
+### Layout Settings {-}
+
+The layout settings button let's you edit several attributes of the plot, such as titles, margins and legend orientation. These settings are different for different html widgets. This is very helpful, specially for the beginners, as sometimes it can get really cubersome to tweak these settings for different plots. 
+
+The image below shows the plot settings for **Bar Plot**
+
+```{r, echo=F}
+knitr::include_graphics("images/basic_layout_settings.png")
+```
+

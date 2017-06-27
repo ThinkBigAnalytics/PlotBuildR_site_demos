@@ -1,6 +1,586 @@
-# How to use PlotBuildR {#how-to}
+# Going Deeper {#how-to}
 
-This section contains the code snippets
+This chapter contains detailed description about the arguments each plot takes.
+
+Below are all the arguments that the `PlotBuildR::renderPlotBuildR()` function takes
+
+```{r, echo=F}
+names(as.list(args(PlotBuildR::renderPlotBuildR)))[-29]
+```
+
+The reason why we have provided all these arguments is that when you are finalise your plot, you can come back to the server side and fix all the arguments, so that the next time you get the same plot. All the values should be quoted strings, for eg. `df = "iris"`, except for the `df_list` and `reactive_df`, which take a `list()` as values.
+
+As previously mentioned in \@ref(plot) section, you can plot several plots using *plotbuildR*. Let's look at them in detail
+
+## Plotly Plots {}
+
+Plotly gives us a very rich interactive visualisation library. We have delicately selected the settings, so that you can make a presentable plot with it, without the need to know code to make such plots. 
+
+> Note: If you are expert in Plotly and if it doesn't take more than 2 mins to plot, then we recommend you to stick with it, because plotbuildR gives only limited setting ooptions. 
+
+### Multiple Bar Plot {}
+
+To plot Multiple Bar Plot, you can run the Getting Started app given in Chapter \@ref(getting-started). Click on the plot settings button, explained in Chapter \@ref(plot-settings).
+
+After selecting the Multiple Bar Plot icon and you can go to the Settings tab. 
+
+You will see the following setting options
+
+```{r, echo=F}
+knitr::include_graphics("images/mbp_settings.png")
+```
+
+The `Dataset Choices` dropdown item let's you select the data frame of your choice from the list that you passed in `df_list` and / or `reactive_df` argument. You can then select the `X-Axis`, `Y-Axis` and `Y2-Axis` from the respective dropdown lists, which contain the column names of the data frame selected.
+
+> Note: plotbuildR automatically checks the column type and only selects dbl or int type columns for Y-Axis
+
+You can also specify the arguments in the server side logic of *plotbuildR*
+
+Multiple Bar Plot takes the following arguments
+
+```{}
+x, y, y2, plot_type, title, x_label & y_label 
+```
+
+Here is the sample code that will produce the Multiple Bar Plot using the user-defined arguments.
+
+```{}
+## Server Logic
+
+server <- function(input, output, server){
+  
+    renderPlotBuildR("plot", 
+                   df_list = df_list, df = "iris",
+                   x = "Species", y = "Petal.Length", y2 = "Petal.Width", 
+                   plot_type = "Multiple Bar Plot", title = "Petal Length vs Width per Species", 
+                   x_label = "Species", y_label = "Length")
+}
+
+```
+
+The code above will generate the following plot
+
+```{r, echo=F}
+knitr::include_graphics("images/multiple_bar_plot.png")
+```
+
+-------------
+
+### Bar Plot {}
+
+Multiple Bar Plot takes the following arguments
+
+```{}
+x, y, y2, plot_type, title, x_label & y_label 
+```
+
+Here is the sample code that will produce the Multiple Bar Plot using the user-defined arguments.
+
+```{}
+## Server Logic
+
+server <- function(input, output, server){
+  
+    renderPlotBuildR("plot", 
+                   df_list = df_list, df = "iris",
+                   x = "Species", y = "Petal.Length", y2 = "Petal.Width", 
+                   plot_type = "Multiple Bar Plot", title = "Petal Length vs Width per Species", 
+                   x_label = "Species", y_label = "Length")
+}
+
+```
+
+The code above will generate the following plot
+
+```{r, echo=F}
+knitr::include_graphics("images/multiple_bar_plot.png")
+```
+
+-------------
+
+### Scatter Plot {}
+
+Multiple Bar Plot takes the following arguments
+
+```{}
+x, y, y2, plot_type, title, x_label & y_label 
+```
+
+Here is the sample code that will produce the Multiple Bar Plot using the user-defined arguments.
+
+```{}
+## Server Logic
+
+server <- function(input, output, server){
+  
+    renderPlotBuildR("plot", 
+                   df_list = df_list, df = "iris",
+                   x = "Species", y = "Petal.Length", y2 = "Petal.Width", 
+                   plot_type = "Multiple Bar Plot", title = "Petal Length vs Width per Species", 
+                   x_label = "Species", y_label = "Length")
+}
+
+```
+
+The code above will generate the following plot
+
+```{r, echo=F}
+knitr::include_graphics("images/multiple_bar_plot.png")
+```
+
+-------------
+
+### Multiple Line Plot {}
+
+Multiple Bar Plot takes the following arguments
+
+```{}
+x, y, y2, plot_type, title, x_label & y_label 
+```
+
+Here is the sample code that will produce the Multiple Bar Plot using the user-defined arguments.
+
+```{}
+## Server Logic
+
+server <- function(input, output, server){
+  
+    renderPlotBuildR("plot", 
+                   df_list = df_list, df = "iris",
+                   x = "Species", y = "Petal.Length", y2 = "Petal.Width", 
+                   plot_type = "Multiple Bar Plot", title = "Petal Length vs Width per Species", 
+                   x_label = "Species", y_label = "Length")
+}
+
+```
+
+The code above will generate the following plot
+
+```{r, echo=F}
+knitr::include_graphics("images/multiple_bar_plot.png")
+```
+
+-------------
+
+### Line Plot {}
+
+Multiple Bar Plot takes the following arguments
+
+```{}
+x, y, y2, plot_type, title, x_label & y_label 
+```
+
+Here is the sample code that will produce the Multiple Bar Plot using the user-defined arguments.
+
+```{}
+## Server Logic
+
+server <- function(input, output, server){
+  
+    renderPlotBuildR("plot", 
+                   df_list = df_list, df = "iris",
+                   x = "Species", y = "Petal.Length", y2 = "Petal.Width", 
+                   plot_type = "Multiple Bar Plot", title = "Petal Length vs Width per Species", 
+                   x_label = "Species", y_label = "Length")
+}
+
+```
+
+The code above will generate the following plot
+
+```{r, echo=F}
+knitr::include_graphics("images/multiple_bar_plot.png")
+```
+
+-------------
+
+### Area Plot {}
+
+Multiple Bar Plot takes the following arguments
+
+```{}
+x, y, y2, plot_type, title, x_label & y_label 
+```
+
+Here is the sample code that will produce the Multiple Bar Plot using the user-defined arguments.
+
+```{}
+## Server Logic
+
+server <- function(input, output, server){
+  
+    renderPlotBuildR("plot", 
+                   df_list = df_list, df = "iris",
+                   x = "Species", y = "Petal.Length", y2 = "Petal.Width", 
+                   plot_type = "Multiple Bar Plot", title = "Petal Length vs Width per Species", 
+                   x_label = "Species", y_label = "Length")
+}
+
+```
+
+The code above will generate the following plot
+
+```{r, echo=F}
+knitr::include_graphics("images/multiple_bar_plot.png")
+```
+
+-------------
+
+### Histogram {}
+
+Multiple Bar Plot takes the following arguments
+
+```{}
+x, y, y2, plot_type, title, x_label & y_label 
+```
+
+Here is the sample code that will produce the Multiple Bar Plot using the user-defined arguments.
+
+```{}
+## Server Logic
+
+server <- function(input, output, server){
+  
+    renderPlotBuildR("plot", 
+                   df_list = df_list, df = "iris",
+                   x = "Species", y = "Petal.Length", y2 = "Petal.Width", 
+                   plot_type = "Multiple Bar Plot", title = "Petal Length vs Width per Species", 
+                   x_label = "Species", y_label = "Length")
+}
+
+```
+
+The code above will generate the following plot
+
+```{r, echo=F}
+knitr::include_graphics("images/multiple_bar_plot.png")
+```
+
+-------------
+
+### Box Plot {}
+
+Multiple Bar Plot takes the following arguments
+
+```{}
+x, y, y2, plot_type, title, x_label & y_label 
+```
+
+Here is the sample code that will produce the Multiple Bar Plot using the user-defined arguments.
+
+```{}
+## Server Logic
+
+server <- function(input, output, server){
+  
+    renderPlotBuildR("plot", 
+                   df_list = df_list, df = "iris",
+                   x = "Species", y = "Petal.Length", y2 = "Petal.Width", 
+                   plot_type = "Multiple Bar Plot", title = "Petal Length vs Width per Species", 
+                   x_label = "Species", y_label = "Length")
+}
+
+```
+
+The code above will generate the following plot
+
+```{r, echo=F}
+knitr::include_graphics("images/multiple_bar_plot.png")
+```
+
+-------------
+
+### Pie Chart {}
+
+Multiple Bar Plot takes the following arguments
+
+```{}
+x, y, y2, plot_type, title, x_label & y_label 
+```
+
+Here is the sample code that will produce the Multiple Bar Plot using the user-defined arguments.
+
+```{}
+## Server Logic
+
+server <- function(input, output, server){
+  
+    renderPlotBuildR("plot", 
+                   df_list = df_list, df = "iris",
+                   x = "Species", y = "Petal.Length", y2 = "Petal.Width", 
+                   plot_type = "Multiple Bar Plot", title = "Petal Length vs Width per Species", 
+                   x_label = "Species", y_label = "Length")
+}
+
+```
+
+The code above will generate the following plot
+
+```{r, echo=F}
+knitr::include_graphics("images/multiple_bar_plot.png")
+```
+
+-------------
+
+### Heatmap {}
+
+Multiple Bar Plot takes the following arguments
+
+```{}
+x, y, y2, plot_type, title, x_label & y_label 
+```
+
+Here is the sample code that will produce the Multiple Bar Plot using the user-defined arguments.
+
+```{}
+## Server Logic
+
+server <- function(input, output, server){
+  
+    renderPlotBuildR("plot", 
+                   df_list = df_list, df = "iris",
+                   x = "Species", y = "Petal.Length", y2 = "Petal.Width", 
+                   plot_type = "Multiple Bar Plot", title = "Petal Length vs Width per Species", 
+                   x_label = "Species", y_label = "Length")
+}
+
+```
+
+The code above will generate the following plot
+
+```{r, echo=F}
+knitr::include_graphics("images/multiple_bar_plot.png")
+```
+
+-------------
+
+### Contour Plot {}
+
+Multiple Bar Plot takes the following arguments
+
+```{}
+x, y, y2, plot_type, title, x_label & y_label 
+```
+
+Here is the sample code that will produce the Multiple Bar Plot using the user-defined arguments.
+
+```{}
+## Server Logic
+
+server <- function(input, output, server){
+  
+    renderPlotBuildR("plot", 
+                   df_list = df_list, df = "iris",
+                   x = "Species", y = "Petal.Length", y2 = "Petal.Width", 
+                   plot_type = "Multiple Bar Plot", title = "Petal Length vs Width per Species", 
+                   x_label = "Species", y_label = "Length")
+}
+
+```
+
+The code above will generate the following plot
+
+```{r, echo=F}
+knitr::include_graphics("images/multiple_bar_plot.png")
+```
+
+-------------
+
+## NetworkD3 Graphs
 
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+### Simple Network {}
+
+Multiple Bar Plot takes the following arguments
+
+```{}
+x, y, y2, plot_type, title, x_label & y_label 
+```
+
+Here is the sample code that will produce the Multiple Bar Plot using the user-defined arguments.
+
+```{}
+## Server Logic
+
+server <- function(input, output, server){
+  
+    renderPlotBuildR("plot", 
+                   df_list = df_list, df = "iris",
+                   x = "Species", y = "Petal.Length", y2 = "Petal.Width", 
+                   plot_type = "Multiple Bar Plot", title = "Petal Length vs Width per Species", 
+                   x_label = "Species", y_label = "Length")
+}
+
+```
+
+The code above will generate the following plot
+
+```{r, echo=F}
+knitr::include_graphics("images/multiple_bar_plot.png")
+```
+
+-------------
+
+### Force Network {}
+
+Multiple Bar Plot takes the following arguments
+
+```{}
+x, y, y2, plot_type, title, x_label & y_label 
+```
+
+Here is the sample code that will produce the Multiple Bar Plot using the user-defined arguments.
+
+```{}
+## Server Logic
+
+server <- function(input, output, server){
+  
+    renderPlotBuildR("plot", 
+                   df_list = df_list, df = "iris",
+                   x = "Species", y = "Petal.Length", y2 = "Petal.Width", 
+                   plot_type = "Multiple Bar Plot", title = "Petal Length vs Width per Species", 
+                   x_label = "Species", y_label = "Length")
+}
+
+```
+
+The code above will generate the following plot
+
+```{r, echo=F}
+knitr::include_graphics("images/multiple_bar_plot.png")
+```
+
+-------------
+
+### Sankey Network {}
+
+Multiple Bar Plot takes the following arguments
+
+```{}
+x, y, y2, plot_type, title, x_label & y_label 
+```
+
+Here is the sample code that will produce the Multiple Bar Plot using the user-defined arguments.
+
+```{}
+## Server Logic
+
+server <- function(input, output, server){
+  
+    renderPlotBuildR("plot", 
+                   df_list = df_list, df = "iris",
+                   x = "Species", y = "Petal.Length", y2 = "Petal.Width", 
+                   plot_type = "Multiple Bar Plot", title = "Petal Length vs Width per Species", 
+                   x_label = "Species", y_label = "Length")
+}
+
+```
+
+The code above will generate the following plot
+
+```{r, echo=F}
+knitr::include_graphics("images/multiple_bar_plot.png")
+```
+
+-------------
+
+### Dendro Network {}
+
+Multiple Bar Plot takes the following arguments
+
+```{}
+x, y, y2, plot_type, title, x_label & y_label 
+```
+
+Here is the sample code that will produce the Multiple Bar Plot using the user-defined arguments.
+
+```{}
+## Server Logic
+
+server <- function(input, output, server){
+  
+    renderPlotBuildR("plot", 
+                   df_list = df_list, df = "iris",
+                   x = "Species", y = "Petal.Length", y2 = "Petal.Width", 
+                   plot_type = "Multiple Bar Plot", title = "Petal Length vs Width per Species", 
+                   x_label = "Species", y_label = "Length")
+}
+
+```
+
+The code above will generate the following plot
+
+```{r, echo=F}
+knitr::include_graphics("images/multiple_bar_plot.png")
+```
+
+-------------
+
+## Leaflet {}
+
+### Map {}
+
+Multiple Bar Plot takes the following arguments
+
+```{}
+x, y, y2, plot_type, title, x_label & y_label 
+```
+
+Here is the sample code that will produce the Multiple Bar Plot using the user-defined arguments.
+
+```{}
+## Server Logic
+
+server <- function(input, output, server){
+  
+    renderPlotBuildR("plot", 
+                   df_list = df_list, df = "iris",
+                   x = "Species", y = "Petal.Length", y2 = "Petal.Width", 
+                   plot_type = "Multiple Bar Plot", title = "Petal Length vs Width per Species", 
+                   x_label = "Species", y_label = "Length")
+}
+
+```
+
+The code above will generate the following plot
+
+```{r, echo=F}
+knitr::include_graphics("images/multiple_bar_plot.png")
+```
+
+-------------
+
+## Parcoords {}
+
+### Parallel Coordinates {}
+
+Multiple Bar Plot takes the following arguments
+
+```{}
+x, y, y2, plot_type, title, x_label & y_label 
+```
+
+Here is the sample code that will produce the Multiple Bar Plot using the user-defined arguments.
+
+```{}
+## Server Logic
+
+server <- function(input, output, server){
+  
+    renderPlotBuildR("plot", 
+                   df_list = df_list, df = "iris",
+                   x = "Species", y = "Petal.Length", y2 = "Petal.Width", 
+                   plot_type = "Multiple Bar Plot", title = "Petal Length vs Width per Species", 
+                   x_label = "Species", y_label = "Length")
+}
+
+```
+
+The code above will generate the following plot
+
+```{r, echo=F}
+knitr::include_graphics("images/multiple_bar_plot.png")
+```
+
+------------------------------------------------------------------

@@ -4,16 +4,25 @@ bookdown::gitbook:
   split_by: section
   config:
     toc:
-      collapse: none
+      collapse: subsection
+      scroll_highlight: yes
       before: |
         <li><a href="./">PlotBuildR Book</a></li>
       after: |
-        <li><a href="http://data-lab.io/Solution/PlotBuildR/" target="blank">Published with bookdown</a></li>
+        <li><a href="http://data-lab.io/Solution/PlotBuildR/" target="blank">plotbuildR Demo</a></li>
+        <li><a href="http://bookdown.org" target="blank">Published with bookdown</a></li>
     download: [pdf, epub, mobi]
-    edit: https://github.com/rstudio/bookdown/edit/master/inst/examples/%s
+    edit: null
+    fontsettings: 
+      theme: white
+      family: sans
+      size: 2
     sharing:
       github: yes
       facebook: no
+      weibo: no
+      instapper: no
+      vk: no
 bookdown::html_chapters:
   css: [css/style.css, css/toc.css]
 bookdown::pdf_book:

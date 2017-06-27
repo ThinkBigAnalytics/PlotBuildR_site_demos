@@ -4,6 +4,7 @@ author: "Niket Doshi, Eliano Marques"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
+theme: tango
 documentclass: krantz
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
@@ -40,13 +41,17 @@ We hope this can offer an intuitive way into the world of graphics in **R** for 
 
 ## Structure of the guide {-}
 
-Chapters \@ref(intro) and \@ref(getting-started) introduces the *plotbuildR* package, the installation instructions and the basic usage and syntax, which should be sufficient to get most of the users started using *plotbuildR*. Chapter \@ref(how-to) tries to explain in detail for those who want to fine-tune the appearance of their plot, the kind of data required to make different kind of plots. We have also provided reproducible examples to generate all kind of plots. You do not need to read this chapter very carefully for the first time. You can learn what can be possibly changed, and come back later to know how. 
+Chapters \@ref(intro) and \@ref(getting-started) introduces the *plotbuildR* package, the installation instructions and the basic usage and syntax, which should be sufficient to get most of the users started using *plotbuildR*. Chapter \@ref(how-to) tries to explain in detail for those who want to fine-tune the appearance of their plot and the kind of data required to make different kind of plots. We have also provided reproducible examples to generate all kind of plots. You do not need to read this chapter very carefully for the first time. You can learn what can be possibly changed, and come back later to know how. 
 
-To sum it up, this book is a comprehensive reference of the *plotbuildR* package. You can follow the 80/20 rule when reading it. Some sections are there for the sake of completeness, and not all sections are equally useful to the particular book(s) that you intend to write.
+To sum it up, this book is a comprehensive reference of the *plotbuildR* package. You can follow the 80/20 rule when reading it.
 
 ## Package Dependencies {-}
+"plyr", "dplyr", "lazyeval", "networkD3", "plotly", "leaflet", "parcoords", "shiny", "shinyBS", "shinydashboard", "shinythemes", "tidyr", "parcoords"
+
 
 ## Acknowledgements {-}
+
+I would like to thank Eliano Marques to giving me this opportunity and guidance to write *plotbuildR*. The RStudio Shiny team for making such a powerful framework, which encouraged me to do some crazy things with it. The authors of different htmlwidgets without which this package would not have come into existance. I wouldn't forget Xie for making this wonderful bookdown package, which made it super easy to write this book :)
 
 
 ```{r include=FALSE}

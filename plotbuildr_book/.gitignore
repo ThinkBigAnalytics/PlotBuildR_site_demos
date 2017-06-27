@@ -7,3 +7,7 @@ packrat/lib*/
 packrat/src/*
 data*/
 packrat/src/
+
+_bookdown_files
+_book
+packages.bib
