@@ -4,11 +4,11 @@ This chapter contains detailed description about the arguments each plot takes.
 
 Below are all the arguments that the `PlotBuildR::renderPlotBuildR()` function takes
 
-```{r, echo=F}
+```{}
 names(as.list(args(PlotBuildR::renderPlotBuildR)))[-29]
 ```
 
-The reason why we have provided all these arguments is that when you are finalise your plot, you can come back to the server side and fix all the arguments, so that the next time you get the same plot. All the values should be quoted strings, for eg. `df = "iris"`, except for the `df_list` and `reactive_df`, which take a `list()` as values.
+The reason why we have provided all these arguments is that when you finalise your plot, you can come back to the server side and fix all the arguments, so that you never lose the state of your plot. All the values should be quoted strings, for eg. `df = "iris"`, except for the `df_list` and `reactive_df` arguments, which take a `list()` as value.
 
 As previously mentioned in \@ref(plot) section, you can plot several plots using *plotbuildR*. Let's look at them in detail
 
@@ -18,9 +18,13 @@ Plotly gives us a very rich interactive visualisation library. We have delicatel
 
 > Note: If you are expert in Plotly and if it doesn't take more than 2 mins to plot, then we recommend you to stick with it, because plotbuildR gives only limited setting ooptions. 
 
+As the data science and visualisation go hand in hand, we have tried to be consistent with the workflow by using some tidyverse functions for data analysis and plotbuildR to easily visualise the data. 
+
+We will use `gapminder` dataset throughout this section.
+
 ### Multiple Bar Plot {}
 
-To plot Multiple Bar Plot, you can run the Getting Started app given in Chapter \@ref(getting-started). Click on the plot settings button, explained in Chapter \@ref(plot-settings).
+To plot a Multiple Bar Plot, you can run the Getting Started app given in Chapter \@ref(getting-started). Click on the plot settings button, explained in Chapter \@ref(plot-settings).
 
 After selecting the Multiple Bar Plot icon and you can go to the Settings tab. 
 
@@ -34,29 +38,71 @@ The `Dataset Choices` dropdown item let's you select the data frame of your choi
 
 > Note: plotbuildR automatically checks the column type and only selects dbl or int type columns for Y-Axis
 
-You can also specify the arguments in the server side logic of *plotbuildR*
+You can also specify the arguments in the server side logic of *plotbuildR*. An example is provided in the sub-section of each plot.
 
 Multiple Bar Plot takes the following arguments
 
 ```{}
-x, y, y2, plot_type, title, x_label & y_label 
+x, y, y2, plot_type = "Multiple Bar Plot", title, x_label & y_label 
 ```
 
-Here is the sample code that will produce the Multiple Bar Plot using the user-defined arguments.
+**Example**
+
+Let's start by loading the data and look at the first 6 rows of the dataset
+
+```{r}
+library(gapminder)
+library(magrittr)
+
+gapminder %>% head(6)
+```
+
+Now let's look at the top 2 countries in each continent with highest life expectancy.
+
+Below is the sample code that will launch a shiny app with a Multiple Bar Plot using the user-defined arguments. 
 
 ```{}
-## Server Logic
+library(shiny)
+library(shinydashboard)
+library(gapminder)
+library(tidyverse)
+library(PlotBuildR)
 
-server <- function(input, output, server){
+ui <- fluidPage(
+  fluidRow(
+    PlotBuildR::plotBuildROutput("plot", col_width = 8, status = "danger", solidHeader = T)
+  )
+)
+
+server <- function(input, output, session){
   
-    renderPlotBuildR("plot", 
-                   df_list = df_list, df = "iris",
-                   x = "Species", y = "Petal.Length", y2 = "Petal.Width", 
-                   plot_type = "Multiple Bar Plot", title = "Petal Length vs Width per Species", 
-                   x_label = "Species", y_label = "Length")
+  rdf_list <- list()
+  
+  rdf_list$top_2_cuntries <- reactive({
+    gapminder %>% 
+      mutate(country = as.character(country)) %>% 
+      filter(year >= 2002) %>% 
+      group_by(continent, year) %>% 
+      top_n(n = 2, wt = lifeExp) %>% 
+      select(-pop, -gdpPercap) %>% 
+      mutate(country_continent = paste(country, continent, sep = ", ")) %>% 
+      spread(year, lifeExp) %>% 
+      drop_na()
+  })
+  
+  renderPlotBuildR("plot", 
+                   reactive_df = rdf_list, df = "top_2_cuntries",
+                   x = "country_continent", plot_type = "Multiple Bar Plot", 
+                   x_label = "Country, Continent", y_label = "Life Expectancy", 
+                   title = "Life Expectancy of Top 2 Countries Per Continent")
+  
 }
 
+shinyApp(ui, server)
+
 ```
+
+> We will continue working on the same app from this point.
 
 The code above will generate the following plot
 
@@ -68,24 +114,34 @@ knitr::include_graphics("images/multiple_bar_plot.png")
 
 ### Bar Plot {}
 
-Multiple Bar Plot takes the following arguments
+Bar Plot takes the following arguments
 
 ```{}
-x, y, y2, plot_type, title, x_label & y_label 
+df, x, y, color, plot_type, bar_mode, 
+bar_orientation, title, x_label, y_label
 ```
 
-Here is the sample code that will produce the Multiple Bar Plot using the user-defined arguments.
+Let's plot and see the average GDP per capita of each continent for the last 4 years
 
 ```{}
 ## Server Logic
 
 server <- function(input, output, server){
   
-    renderPlotBuildR("plot", 
-                   df_list = df_list, df = "iris",
-                   x = "Species", y = "Petal.Length", y2 = "Petal.Width", 
-                   plot_type = "Multiple Bar Plot", title = "Petal Length vs Width per Species", 
-                   x_label = "Species", y_label = "Length")
+  rdf_list$gdp_per_continent <- reactive({
+    gapminder_unfiltered %>% 
+      filter(year > 2003) %>% 
+      mutate(year = as.character(year)) %>% 
+      group_by(continent, year) %>% 
+      summarise(avg_gdp = mean(gdpPercap, na.rm = T))
+  })
+  
+  renderPlotBuildR("plot",
+                   df_list = df_list, reactive_df = rdf_list,
+                   df = "gdp_per_continent", x = "year", color = "continent",
+                   plot_type = "Bar Plot", x_label = "Year",
+                   y_label = "Average GDP per Capita (in $)", 
+                   title = "Avg. GDP per Capita per Continent")
 }
 
 ```
@@ -93,31 +149,38 @@ server <- function(input, output, server){
 The code above will generate the following plot
 
 ```{r, echo=F}
-knitr::include_graphics("images/multiple_bar_plot.png")
+knitr::include_graphics("images/bar_plot.png")
 ```
 
 -------------
 
 ### Scatter Plot {}
 
-Multiple Bar Plot takes the following arguments
+Scatter Plot takes the following arguments
 
 ```{}
-x, y, y2, plot_type, title, x_label & y_label 
+## df, x, y, color, size, plot_type, 
+## title, x_label, y_label 
 ```
 
-Here is the sample code that will produce the Multiple Bar Plot using the user-defined arguments.
+Since we have 3 numeric variables, we can plot a scatter plot to compare average life expectancy and GDP per capita of the countries in the Americas during the year 2007. The size of the bubble tells the population of that country
 
 ```{}
 ## Server Logic
 
 server <- function(input, output, server){
   
-    renderPlotBuildR("plot", 
-                   df_list = df_list, df = "iris",
-                   x = "Species", y = "Petal.Length", y2 = "Petal.Width", 
-                   plot_type = "Multiple Bar Plot", title = "Petal Length vs Width per Species", 
-                   x_label = "Species", y_label = "Length")
+  rdf_list$gdp_per_country <- reactive({
+    gapminder_unfiltered %>% 
+      filter(year == 2007, continent %in% "Americas")
+  })
+  
+  renderPlotBuildR("plot",
+                   df_list = df_list, reactive_df = rdf_list, df = "gdp_per_country", 
+                   x = "lifeExp", y = "gdpPercap", color = "country", size = "pop",
+                   plot_type = "Scatter Plot", x_label = "Life Expectancy",
+                   y_label = "Average GDP per Capita (in $)", 
+                   title = "Avg. GDP vs Avg. Life Expectancy per Country")
 }
 
 ```
@@ -125,7 +188,7 @@ server <- function(input, output, server){
 The code above will generate the following plot
 
 ```{r, echo=F}
-knitr::include_graphics("images/multiple_bar_plot.png")
+knitr::include_graphics("images/2.1.3_scatter_plot.png")
 ```
 
 -------------
@@ -164,24 +227,29 @@ knitr::include_graphics("images/multiple_bar_plot.png")
 
 ### Line Plot {}
 
-Multiple Bar Plot takes the following arguments
+Line Plot takes the following arguments
 
 ```{}
-x, y, y2, plot_type, title, x_label & y_label 
+x, y, color, plot_type = "Line Plot", title, x_label & y_label 
 ```
 
-Here is the sample code that will produce the Multiple Bar Plot using the user-defined arguments.
+Here is the sample code that uses the gapminder data to produce a line chart.
 
 ```{}
+library(gapminder)
+
+df_lidt <- list()
+df_list <- "gapminder"
+
 ## Server Logic
+
 
 server <- function(input, output, server){
   
-    renderPlotBuildR("plot", 
-                   df_list = df_list, df = "iris",
-                   x = "Species", y = "Petal.Length", y2 = "Petal.Width", 
-                   plot_type = "Multiple Bar Plot", title = "Petal Length vs Width per Species", 
-                   x_label = "Species", y_label = "Length")
+      renderPlotBuildR("plot", 
+                   df_list = df_list, df = "gapminder", x = "year", y = "lifeExp", color = "country", 
+                   plot_type = "Line Plot", title = "Yearly Life Expectancy per Country",
+                   x_label = "Year", y_label = "Avg. Life Expectancy")
 }
 
 ```
@@ -189,7 +257,7 @@ server <- function(input, output, server){
 The code above will generate the following plot
 
 ```{r, echo=F}
-knitr::include_graphics("images/multiple_bar_plot.png")
+knitr::include_graphics("images/line_plot.png")
 ```
 
 -------------

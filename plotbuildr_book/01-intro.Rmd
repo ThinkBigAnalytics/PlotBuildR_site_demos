@@ -52,8 +52,7 @@ packageVersion("plotbuildR")
 Copy and paste the code below in your R console to run your basic Shiny app with *plotbuildR*
 ```{}
 library(shiny)
-library(plyr)
-library(dplyr)
+library(tidyverse)
 library(leaflet)
 library(plotly)
 library(networkD3)
