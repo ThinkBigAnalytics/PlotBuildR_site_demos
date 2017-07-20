@@ -1,20 +1,19 @@
 --- 
-title: "plotbuildR: Dynamically Create Interactive Plots in Shiny"
+title: "plotbuildr: Dynamically Create Interactive Plots in Shiny"
 author: "Niket Doshi, Eliano Marques"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 theme: tango
-documentclass: krantz
+documentclass: scrbook
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 colorlinks: yes
 fontsize: 12pt
-monofont: Source Code Pro
-url: https\://data-lab.io/Solutions/PlotBuildR/
-github-repo: thinkbiganalytics/PlotBuildR
-description: "A comprehensive user guide to plot interactive graphs dynamically using plotBuildR"
+url: https\://data-lab.io/Solutions/plotbuildr/
+github-repo: thinkbiganalytics/plotbuildr
+description: "A comprehensive user guide to plot interactive graphs dynamically using plotbuildr"
 ---
 
 ```{r, echo=F}
@@ -30,28 +29,41 @@ options(
 
 # Preface {-}
 
-*R* has many packages that facilitate the visualisation of data at camera-ready standards for journal publication. In particular **ggplot2** is a very popular package that follows the principle of grammar of graphics. However, this may be difficult to access for non-expert users. Other packages that offer APIs for easier access to interactive graphing capabilities also exist. For example, **Plotly** has a great visualisation API that can render several dynamic plots. However, tweaking plots can be cumbersome, and may be a challenge for newcomers to *R*. Likewise, **NetworkD3** has a visualisation API that renders network graphs. A challenge to using these packages is that there is a separate function to each kind of graph. These different packages do not have a consistent behaviour, as they take different arguments, putting a larger demand of effort on the user.
+*R* [@R-base] has many packages that facilitate the visualisation of data at camera-ready standards for journal publication. In particular `ggplot2` [@R-ggplot2] is a very popular package that follows the principle of grammar of graphics. However, this may be difficult to access for non-expert users. Other packages that are part of the CRAN and offer javascript APIs for easier access to interactive graphing capabilities also exist. For example, `plotly` [@R-plotly] has a great visualisation API that can render several interactive plots. However, tweaking them can be cumbersome, and may be a challenge for newcomers to *R*. Likewise, `networkD3` [@R-networkD3] has a visualization API that renders network graphs. A challenge to using these packages is that there is a separate function to each kind of graph. These different packages do not have a consistent behavior, as they take different arguments, putting a larger demand of effort on the user.
 
-To alleviate these issues, we have created the package **plotbuildR**. This is a visualisation framework built on **Shiny** which leverages all the powerful graphing libraries in *R*, such as **Plotly**, **NetworkD3**, **leaflet**, and **dygraph**. It allows users to create highly dynamic graphs in a **Shiny** app on the fly. It can work as a stand alone application or be parts of other applications as a self contained module.
+To alleviate these issues, we have created the package `plotbuildr`. This is a visualization framework built on `shiny` [@R-shiny] which leverages all the powerful graphing libraries in *R*, such as `plotly`, `networkD3`, and `leaflet` [@R-leaflet]. It allows users to create highly dynamic graphs in a `shiny` app on the fly. It can work as a stand alone application or be parts of other applications as a self contained module.
 
-The package **plotbuildR** is highly flexible and offers a dynamic visualisation framework. It provides a common interface to several existing *R* packages, and an intuitive list of plots from which to select. This makes it easy to compare several kind of graphs with a few quick clicks, to see which lends itself to interpretation most effortlessly.
+The package `plotbuildr` is highly flexible and offers a dynamic visualization framework. It provides a common interface to several existing *R* packages, and an intuitive list of plots from which to select. This makes it easy to compare several kind of graphs with a few quick clicks, to see which lends itself to interpretation most effortlessly.
 
-We hope this can offer an intuitive way into the world of graphics in **R** for all levels of useRs, be it novices to **R** or expert users seeking to compare many different visualisations quickly or try out packages they have not used before.
+We hope this can offer an intuitive way into the world of graphics in *R* for all levels of useRs, be it novices to *R* or expert users seeking to compare many different visualizations quickly or try out packages they have not used before.
 
 
 ## Structure of the guide {-}
 
-Chapters \@ref(intro) and \@ref(getting-started) introduces the *plotbuildR* package, the installation instructions and the basic usage and syntax, which should be sufficient to get most of the users started using *plotbuildR*. Chapter \@ref(how-to) tries to explain in detail for those who want to fine-tune the appearance of their plot and the kind of data required to make different kind of plots. We have also provided reproducible examples to generate all kind of plots. You do not need to read this chapter very carefully for the first time. You can learn what can be possibly changed, and come back later to know how. 
+Chapters \@ref(intro) introduces the `plotbuildr` package, the installation instructions and the basic usage and syntax, which should be sufficient to get most of the users started using `plotbuildr`. Chapter \@ref(how-to) tries to explain in detail for those who want to fine-tune the appearance of their plot and the kind of data required to make different kind of plots. We have also provided reproducible examples to generate all kind of plots. You do not need to read this chapter very carefully for the first time. You can learn what can be possibly changed, and come back later to know how. 
 
-To sum it up, this book is a comprehensive reference of the *plotbuildR* package. You can follow the 80/20 rule when reading it.
+To sum it up, this book is a comprehensive reference of the `plotbuildr` package. You can follow the 80/20 rule when reading it.
 
 ## Package Dependencies {-}
-"plyr", "dplyr", "lazyeval", "networkD3", "plotly", "leaflet", "parcoords", "shiny", "shinyBS", "shinydashboard", "shinythemes", "tidyr", "parcoords"
 
+- `dplyr (>= 0.5.0)` [@R-dplyr]
+- `htmltools (>= 0.3.5)` [@R-htmltools]
+- `htmlwidgets (>= 0.8)` [@R-htmlwidgets]
+- `lazyeval (>= 0.2.0)` [@R-lazyeval]
+- `leaflet (>= 1.1.0)` [@R-leaflet]
+- `magrittr (>= 1.5)` [@R-magrittr]
+- `networkD3 (>= 0.2.13)` [@R-networkD3]
+- `plotly (>= 1.0.0)` [@R-plotly]
+- `plyr (>= 1.8.4)` [@R-plyr]
+- `shiny (>= 1.0.3)` [@R-shiny]
+- `shinyBS (>= 0.61)` [@R-shinyBS]
+- `shinydashboard (>= 0.5.3)` [@R-shinydashboard]
+- `shinythemes (>= 0.9)` [@R-shinythemes]
+- `tidyr (>= 0.6.1)` [@R-tidyr]
 
 ## Acknowledgements {-}
 
-I would like to thank Eliano Marques to giving me this opportunity and guidance to write *plotbuildR*. The RStudio Shiny team for making such a powerful framework, which encouraged me to do some crazy things with it. The authors of different htmlwidgets without which this package would not have come into existance. I wouldn't forget Xie for making this wonderful bookdown package, which made it super easy to write this book :)
+I would like to thank Think Big Analytics and Eliano Marques for giving me this opportunity and guidance to write `plotbuildr`. Ian and Neil for building a very robust UI. The RStudio Shiny team [@R-shiny] for making such a powerful framework, which encouraged me to do some crazy things with it. The authors of different `htmlwidgets` without which this package would not have come into existence. Contributors to various `tidyverse` [@R-tidyverse] packages. I wouldn't forget Xie for making this wonderful `bookdown` [@R-bookdown] package, which made it super easy to write this book :)
 
 
 ```{r include=FALSE}
