@@ -1,8 +1,9 @@
 source("global.R")
-library(shiny)
+
+#library(shiny)
 
 ui <- navbarPage(
-  title = "PlotBuildR",
+  title = "plotbuildr",
   tabPanel(
     "MySQL Context",
     fluidPage(
@@ -20,7 +21,7 @@ ui <- navbarPage(
                      dataTableOutput("tbl_sql")
             ),
             tabPanel("Plot",
-                     PlotBuildR::plotBuildROutput("plot_sql")
+                     plotbuildr::plotbuildrOutput("plot_sql")
             )
           )
         )
@@ -49,7 +50,7 @@ ui <- navbarPage(
                      dataTableOutput("tbl_spark")
             ),
             tabPanel("Plot",
-                     PlotBuildR::plotBuildROutput("plot_spark")
+                     plotbuildr::plotbuildrOutput("plot_spark")
             )
           )
         )
@@ -82,7 +83,7 @@ server <- function(input, output, session) {
   
   output$tbl_sql <- renderDataTable({mysql_data()})
   
-  PlotBuildR::renderPlotBuildR("plot_sql", reactive_df = reactive_list_mysql,
+  plotbuildr::renderPlotbuildr("plot_sql", reactive_df = reactive_list_mysql,
                                df = "df", plot_type = "Bar Plot", title = "Demo SQL Plot")
   
   ## Spark ####
@@ -155,8 +156,13 @@ server <- function(input, output, session) {
     spark_data()
   })
   
-  PlotBuildR::renderPlotBuildR("plot_spark", reactive_df = reactive_list_spark, df = "df", 
+  plotbuildr::renderPlotbuildr("plot_spark", reactive_df = reactive_list_spark, df = "df", 
                                plot_type = "Map", title = "Demo Spark Plot")
+  
+  session$onSessionEnded(function() {
+    if(!is.null(sc)) spark_disconnect(sc = sc)
+    rm(list = ls())
+  })
 }
 
 shinyApp(ui, server)
