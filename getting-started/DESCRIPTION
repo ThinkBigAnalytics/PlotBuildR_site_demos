@@ -1,0 +1,6 @@
+Authors@R: c(person("Niket", "Doshi", email = "niket.doshi@thinkbiganalytics.com",  role = c("aut", "cre")),
+             person("Eliano", "Marques", email = "eliano.marques@thinkbiganalytics.com", role = c("aut"))
+License: MIT
+DisplayMode: Showcase
+Tags: getting-started
+Type: Shiny
