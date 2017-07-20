@@ -37,8 +37,7 @@ You can install the development release via the `devtools` [@R-devtools] package
 <!-- ```{r, eval = F} -->
 <!-- if (!require("devtools")) install.packages("devtools") -->
 
-<!-- devtools::install_github('ThinkBigAnalytics/plotbuildr', -->
-<!--                          auth_token='2906e2eadca17b0d31e5217723d860a7974dc68b') -->
+<!-- devtools::install_github('ThinkBigAnalytics/plotbuildr') -->
 
 <!-- ``` -->
 

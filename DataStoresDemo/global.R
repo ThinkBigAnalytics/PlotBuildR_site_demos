@@ -2,7 +2,7 @@
 # Shiny app related packages
 if(!require(dplyr)){devtools::install_github('tidyverse/dplyr'); require(dplyr)}
 if(!require(shiny)){devtools::install_github('rstudio/shiny'); require(shiny)}
-if(!require(plotbuildr)){devtools::install_github('ThinkBigAnalytics/PlotBuildR', auth_token = "02003f40302e2eff2203525d96383c6cc8f09a4e"); require(plotbuildr)}
+if(!require(plotbuildr)){devtools::install_github('ThinkBigAnalytics/PlotBuildR'); require(plotbuildr)}
 
 # Packages to connect with databases
 if(!require(sparklyr)) {install.packages('sparklyr'); require(sparklyr)}
