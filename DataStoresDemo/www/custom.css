@@ -1,0 +1,14 @@
+.main-header .logo {
+  font-family: "helvetica", sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.content-wrapper,
+.right-side {
+  background-color: #ffffff;
+}
+
+box.box-solid.box-danger {
+    border: 1px solid #dd4b39;
+}
