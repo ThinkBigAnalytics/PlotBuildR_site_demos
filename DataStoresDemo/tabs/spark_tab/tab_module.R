@@ -21,7 +21,7 @@ sparkConUI <- function(id) {
     br(),
     fluidRow(
       conditionalPanel(
-        condition = sprintf("input['%s']%s == 1", ns("sparkQueryButton"), "%2"),
+        condition = sprintf("input['%s'] >= 1", ns("sparkQueryButton")),
         tabsetPanel(
           tabPanel("Summary",
                    br(),
