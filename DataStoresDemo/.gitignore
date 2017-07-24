@@ -1,9 +1,0 @@
-.Rproj.user
-.Rhistory
-.RData
-.Rprofile
-
-packrat/lib*/
-packrat/src/*
-data*/
-packrat/src/
