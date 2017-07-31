@@ -1,0 +1,11 @@
+name: plotbuildr-getting-started
+title: plotbuildr-getting-started
+account: nd186031
+server: data-lab.io
+appId: 87
+bundleId: 348
+url: http://data-lab.io/Solution/plotbuildr/getting-started-demo/
+when: 1501051332.7361
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .Rbuildignore|.Rprofile

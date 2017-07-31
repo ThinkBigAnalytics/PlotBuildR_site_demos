@@ -39,7 +39,7 @@ ui <- fluidPage({
   })
 },{
   conditionalPanel(
-    condition = "input.go%2 == 1",
+    condition = "input.go >= 1",
   tabsetPanel({
     tabPanel(
       title = "Table", 
